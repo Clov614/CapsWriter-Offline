@@ -13,6 +13,9 @@ RUN pip install --no-cache-dir --upgrade pip
 # 安装项目所需的依赖
 RUN pip install --no-cache-dir -r requirements-server.txt -i https://mirror.sjtu.edu.cn/pypi/web/simple
 
+# 安装 pyinstaller
+RUN pip install --no-cache-dir pyinstaller
+
 # 运行 pyinstaller 构建可执行文件
 RUN pyinstaller build.spec
 
