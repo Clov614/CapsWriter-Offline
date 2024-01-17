@@ -10,6 +10,9 @@ COPY . /app
 # 安装项目所需的依赖
 RUN pip install --no-cache-dir -r requirements-server.txt -i https://mirror.sjtu.edu.cn/pypi/web/simple
 
+# 执行 pyinstaller build.spec
+RUN pyinstaller build.spec
+
 # 第二阶段：最小化的运行阶段
 FROM python:3.8-slim
 
@@ -17,7 +20,11 @@ FROM python:3.8-slim
 WORKDIR /app
 
 # 从构建阶段复制应用程序
-COPY --from=builder /app /app
+COPY --from=builder /app/dist /app
+
+# 添加执行权限
+RUN chmod +x /app/run_docker.sh
+RUN chmod +x /app/start_server
 
 # 启动容器时执行 run_docker.sh
 CMD ["./run_docker.sh"]
