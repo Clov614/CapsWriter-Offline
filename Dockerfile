@@ -19,15 +19,17 @@ RUN pip install --no-cache-dir pyinstaller
 # 运行 pyinstaller 构建可执行文件
 RUN pyinstaller build.spec
 
-# 第二阶段：最小化的运行阶段
-FROM alpine:3.14
+## 第二阶段：最小化的运行阶段
+#FROM alpine:3.14
+#
+## 设置工作目录
+#WORKDIR /app
+#
+## 从构建阶段复制应用程序
+#COPY --from=builder /app/dist /app
+#COPY --from=builder /app/run_docker.sh /app/run_docker.sh
 
-# 设置工作目录
-WORKDIR /app
-
-# 从构建阶段复制应用程序
-COPY --from=builder /app/dist /app
-COPY --from=builder /app/run_docker.sh /app/run_docker.sh
+COPY /app/dist/start_server  /app/start_server
 
 # 启动容器时执行 run_docker.sh
-CMD ["./run_docker.sh"]
+CMD ["./start_server"]
