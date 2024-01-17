@@ -29,7 +29,7 @@ RUN pyinstaller build.spec
 #COPY --from=builder /app/dist /app
 #COPY --from=builder /app/run_docker.sh /app/run_docker.sh
 
-COPY /app/dist/start_server  /app/start_server
+#COPY /app/dist/start_server  /app/start_server
 
 # 启动容器时执行 run_docker.sh
 CMD ["./start_server"]
