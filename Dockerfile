@@ -29,7 +29,9 @@ WORKDIR /app
 COPY --from=builder /app/dist/CapsWriter-Offline /app
 
 # 安装运行所需的依赖
+# 拷贝requirements文件并安装
+COPY /app/requirements-server.txt /app/requirements-server.txt
 RUN pip install --no-cache-dir -r /app/requirements-server.txt -i https://mirror.sjtu.edu.cn/pypi/web/simple
 
-# 启动容器时执行 run_docker.sh
+# 启动容器时执行 start_server
 CMD ["./start_server"]
